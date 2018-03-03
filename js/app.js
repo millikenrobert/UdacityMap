@@ -149,7 +149,7 @@ var ViewModel = function() {
         });
         return self.mapBikes();
     }, self);
-}
+};
 
 //load the bike json
 function loadJson() {
@@ -159,7 +159,7 @@ function loadJson() {
         ko.applyBindings(new ViewModel());
     }).fail(function() {
         alert("An error has occured, try again");
-    })
+    });
 }
 
 //make the google marker
