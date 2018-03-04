@@ -1,8 +1,8 @@
 //Global variables
 var map;
 var bikeAPI = "https://data.melbourne.vic.gov.au/resource/qnjw-wgaj.json";
-var fourSquareClientID = "NMSO2HL4KVVCM1SHMBUHKRDYZP4JTVG2YJREJ1DUDT23WO4M";
-var fourSquareSecretID = "0YCLS4AJXEG1H5ZP5G41DMGI51YOCGSGI4G5F1O0PADKAAEU";
+var fourSquareClientID = "STPR3A3KB0HXYJL3Z0PT5TGIJVW4BLZIL0XV3BNJNHS1WRR3";
+var fourSquareSecretID = "AOQ52SIEMJMKGWHYZFAVVZ2PMJS2AW3KLFGJMK5C35D02BEQ";
 
 
 
@@ -38,7 +38,7 @@ var bikeMarker = function(data) {
         FourResults = data.response.venues[0];
 
     }).fail(function() {
-        //  alert('Something went wrong with foursquare');
+        alert('Something went wrong with foursquare');
     });
 
 
@@ -62,21 +62,24 @@ var bikeMarker = function(data) {
         taken: this.nbEmpty,
         icon: smartIcon,
         original: smartIcon,
+        animation: null
     });
+
+    //Initialise the setAnimation
+   // this.marker.setAnimation(null)
+
 
     //add listener for infoWindow, create object
     this.marker.addListener('click', function() {
-        toggleBounce(this);
-
         populateInfoWindow(this, infoWindow, FourResults);
         map.panTo(this.getPosition());
+        toggleBounce(this);
     });
 
 
     //on mouseover, set the icon to highlight colour
     this.marker.addListener('mouseover', function() {
         this.setIcon(highlightedIcon);
-
     });
 
     //on mouseout, return the icon to previous colour
@@ -97,13 +100,13 @@ var bikeMarker = function(data) {
 
     //show the marker on click
     this.show = function(location) {
-        toggleBounce(self.marker);
+        //toggleBounce(self.marker);
         google.maps.event.trigger(self.marker, 'click');
     };
 
+
     //Mouseover for menu animation
     this.enableDetails = function(location) {
-        console.log('mouseover');
         self.marker.setIcon(highlightedIcon);
     };
 
@@ -214,6 +217,8 @@ function mapsError() {
 
 //make bounce animatonss
 function toggleBounce(marker) {
+
+
     if (marker.getAnimation() !== null) {
         marker.setAnimation(null);
 

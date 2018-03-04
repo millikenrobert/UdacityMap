@@ -1,7 +1,8 @@
 ## Neighbourhood Map - Version 1.2 - 2018-Mar-04
-V1.0 Initial Load for assessment
-V1.1 Updated semicolons
-V1.2 Updated: Added legend, added mouseover colour change from menu, removed erroneous div tag, added attribution, increased contrast, search button removed
+* V1.0 Initial Load for assessment
+* V1.1 Updated semicolons
+* V1.2 Updated: Added legend, added mouseover colour change from menu, removed erroneous div tag, added attribution, increased contrast, search button removed
+* V1.3 Updated: SetAnimation to null and removed the commented out tag
 
 ##Description
 Mapping application that displays all Melbourne Share bikes and supplements that data with FourSquare data.
