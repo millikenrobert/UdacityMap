@@ -1,8 +1,10 @@
 //Global variables
 var map;
 var bikeAPI = "https://data.melbourne.vic.gov.au/resource/qnjw-wgaj.json";
-var fourSquareClientID = "GR3WGUWH0NFXYQLLMZDCUOM3RCZLJXIOXDXFNZO03YL4F4C1";
-var fourSquareSecretID = "T0PDD2SBFHNXKXEGL2XLY5MM2FX5V0XBOWBVAWVGINWIDPDZ";
+var fourSquareClientID = "NMSO2HL4KVVCM1SHMBUHKRDYZP4JTVG2YJREJ1DUDT23WO4M";
+var fourSquareSecretID = "0YCLS4AJXEG1H5ZP5G41DMGI51YOCGSGI4G5F1O0PADKAAEU";
+
+
 
 var bounds;
 var infoWindow;
@@ -16,11 +18,11 @@ var bikeMarker = function(data) {
 
 
     //different Icon types indicating capacity
-    var defaultIconNone = makeMarkerIcon('000000');
-    var defaultIconHigh = makeMarkerIcon('60ff85');
-    var defaultIconMed = makeMarkerIcon('ffd760');
-    var defaultIconLow = makeMarkerIcon('ff6060');
-    var highlightedIcon = makeMarkerIcon('FFFF24');
+    var defaultIconNone = makeMarkerIcon('ff0000'); //red
+    var defaultIconHigh = makeMarkerIcon('0066ff'); //blue
+    var defaultIconMed = makeMarkerIcon('33cc33'); //green
+    var defaultIconLow = makeMarkerIcon('cccc00'); //yellow
+    var highlightedIcon = makeMarkerIcon('dcf5e9'); //light
 
 
     this.visible = ko.observable(true);
@@ -32,11 +34,11 @@ var bikeMarker = function(data) {
 
 
 
-    $.getJSON('https://api.foursquare.com/v2/venues/search?ll='+data.coordinates.coordinates[1] +','+data.coordinates.coordinates[0]+'&client_id='+fourSquareClientID+'&client_secret='+fourSquareSecretID+'&v=20160118&query=bike').done(function(data) {
-       FourResults = data.response.venues[0];
+    $.getJSON('https://api.foursquare.com/v2/venues/search?ll=' + data.coordinates.coordinates[1] + ',' + data.coordinates.coordinates[0] + '&client_id=' + fourSquareClientID + '&client_secret=' + fourSquareSecretID + '&v=20160118&query=bike').done(function(data) {
+        FourResults = data.response.venues[0];
 
     }).fail(function() {
-        alert('Something went wrong with foursquare');
+        //  alert('Something went wrong with foursquare');
     });
 
 
@@ -77,7 +79,7 @@ var bikeMarker = function(data) {
 
     });
 
-     //on mouseout, return the icon to previous colour
+    //on mouseout, return the icon to previous colour
     this.marker.addListener('mouseout', function() {
         this.setIcon(this.original);
     });
@@ -95,9 +97,21 @@ var bikeMarker = function(data) {
 
     //show the marker on click
     this.show = function(location) {
-         toggleBounce(self.marker);
+        toggleBounce(self.marker);
         google.maps.event.trigger(self.marker, 'click');
-        };
+    };
+
+    //Mouseover for menu animation
+    this.enableDetails = function(location) {
+        console.log('mouseover');
+        self.marker.setIcon(highlightedIcon)
+    }
+
+    //Mouseoff for menu animation
+    this.disableDetails = function(location) {
+        self.marker.setIcon(smartIcon);
+    }
+
 
 
     self.marker.setMap(map);
@@ -179,7 +193,7 @@ function populateInfoWindow(marker, infowindow, FourResults) {
     // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
         // Clear the infowindow content to give the streetview time to load.
-        infowindow.setContent('<div>'+FourResults.name +'<p>' + marker.title + '</div><div>Available:' + marker.available + '</div><div>Taken:' + marker.taken + '</p></div>');
+        infowindow.setContent('<div style="color:#000000">' + FourResults.name + '<p>' + marker.title + '</div><div style="color:#000000">Available:' + marker.available + '</div><div style="color:#000000">Taken:' + marker.taken + '</p><p><img src="img\\pb4sq.png" height="20"></p></div>');
         infowindow.marker = marker;
 
         // Make sure the marker property is cleared if the infowindow is closed.
@@ -202,10 +216,12 @@ function mapsError() {
 function toggleBounce(marker) {
     if (marker.getAnimation() !== null) {
         marker.setAnimation(null);
+
     } else {
         marker.setAnimation(google.maps.Animation.BOUNCE);
         setTimeout(function() {
+            marker.setIcon(marker.original);
             marker.setAnimation(null);
-        }, 1200);
+        }, 2000);
     }
 }

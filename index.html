@@ -14,6 +14,10 @@
     <div class="container" style="width:100%">
         <div class="header clearfix">
             <h3 class="text-muted">Melbourne Share Bike Finder</h3>
+            <div class="col-lg-2"><i class="glyphicon glyphicon-map-marker" style="color:#0066ff;"></i>Plenty of bikes</div>
+            <div class="col-lg-2"><i class="glyphicon glyphicon-map-marker" style="color:#33cc33;"></i>Bikes still available</div>
+            <div class="col-lg-2"><i class="glyphicon glyphicon-map-marker" style="color:#cccc00;"></i>Not many available</div>
+            <div class="col-lg-2"><i class="glyphicon glyphicon-map-marker" style="color:#ff0000;"></i>No bikes available</div>
         </div>
         <div class="row">
             <div class="col-lg-4">
@@ -22,9 +26,6 @@
                         <form class="navbar-form" role="search">
                             <div class="input-group col-lg-12">
                                 <input type="text" class="form-control" placeholder="Search" name="q" data-bind="textInput: searchItem, valueUpdate: 'afterkeydown'">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-                                </div>
                             </div>
                         </form>
                     </div>
@@ -34,7 +35,7 @@
                         <ul data-bind="foreach: locationList" style="font-size: 12px">
                             <li>
                                 <div>
-                                    <span data-bind='text: featurename, click: show'></span>
+                                    <span data-bind='text: featurename, click: show, event: { mouseover: enableDetails, mouseout: disableDetails }'></span>
                                 </div>
                             </li>
                         </ul>
@@ -45,7 +46,6 @@
                 <h1> Map not loaded</h1>
             </div>
         </div>
-    </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
