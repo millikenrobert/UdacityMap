@@ -104,13 +104,13 @@ var bikeMarker = function(data) {
     //Mouseover for menu animation
     this.enableDetails = function(location) {
         console.log('mouseover');
-        self.marker.setIcon(highlightedIcon)
-    }
+        self.marker.setIcon(highlightedIcon);
+    };
 
     //Mouseoff for menu animation
     this.disableDetails = function(location) {
         self.marker.setIcon(smartIcon);
-    }
+    };
 
 
 
